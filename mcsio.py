@@ -20,7 +20,7 @@ def post_to_mcs(payload):
                 except (httplib.HTTPException, socket.error) as ex:
                         print ("Error: %s" % ex)
                          # sleep 10 seconds
-        conn.request("POST", "/mcs/v2/devices/" + deviceId + "/datapoints", json.dumps(payload), h$
+        conn.request("POST", "/mcs/v2/devices/" + deviceId + "/datapoints", json.dumps(payload), headers)
         response = conn.getresponse()
         print( response.status, response.reason, json.dumps(payload), time.strftime("%c"))
         data = response.read()
@@ -45,7 +45,7 @@ while True:
                 else:
                         print('Button release')
                 print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(t0,h0))
-                payload = {"datapoints":[{"dataChnId":"HH","values":{"value":h0}},{"dataChnId":"TT$
+                payload = {"datapoints":[{"dataChnId":"HH","values":{"value":h0}},{"dataChnId":"TT","values":{"value":t0}},{"dataChnId":"SwitchStatus","values":{"value":SwitchStatus}}]}
                 post_to_mcs(payload)
                 time.sleep(10)
         else:
